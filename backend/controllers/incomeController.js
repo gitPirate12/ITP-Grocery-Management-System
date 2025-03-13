@@ -63,28 +63,40 @@ const getAllIncomes = async (req, res) => {
 
 // Update an existing income by its ID
 const updateIncome = async (req, res) => {
-  const { title, amount, category, description, paymentType, date } = req.body;
   const incomeId = req.params.id;
-
+  
   try {
+    // Build update object with only provided fields
+    const updates = {};
+    
+    if (req.body.title) updates.title = req.body.title.trim();
+    if (typeof req.body.amount === 'number') updates.amount = req.body.amount;
+    if (req.body.category) updates.category = req.body.category.trim();
+    if (req.body.description) updates.description = req.body.description.trim();
+    if (req.body.paymentType) updates.paymentType = req.body.paymentType;
+    if (req.body.date) updates.date = new Date(req.body.date);
+
     const updatedIncome = await Income.findByIdAndUpdate(
       incomeId,
-      {
-        title,
-        amount,
-        category,
-        description,
-        paymentType,
-        date: new Date(date),
-      },
-      { new: true }
+      { $set: updates },  
+      { 
+        new: true,
+        runValidators: true,  
+        context: 'query'      
+      }
     );
+
+    if (!updatedIncome) {
+      return res.status(404).json({ status: "Income not found" });
+    }
+
     res.status(200).json(updatedIncome);
   } catch (error) {
     console.log(error);
-    res
-      .status(500)
-      .send({ status: "Error updating income", error: error.message });
+    res.status(500).send({ 
+      status: "Error updating income", 
+      error: error.message 
+    });
   }
 };
 

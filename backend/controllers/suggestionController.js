@@ -56,11 +56,13 @@ const getAllSuggestions = async (req, res) => {
   }
 };
 
-// Get suggestion by ID
 const getSuggestionById = async (req, res) => {
   try {
     const suggestion = await Suggestion.findOne({
-      suggestionId: req.params.id,
+      $or: [
+        { _id: req.params.id }, 
+        { suggestionId: req.params.id } 
+      ]
     }).select("-__v");
 
     if (!suggestion) {
@@ -76,8 +78,12 @@ const getSuggestionById = async (req, res) => {
 // Delete a suggestion
 const deleteSuggestion = async (req, res) => {
   try {
+    // Try to find by both _id and suggestionId
     const deletedSuggestion = await Suggestion.findOneAndDelete({
-      suggestionId: req.params.id,
+      $or: [
+        { _id: req.params.id },
+        { suggestionId: req.params.id }
+      ]
     });
 
     if (!deletedSuggestion) {
@@ -93,7 +99,6 @@ const deleteSuggestion = async (req, res) => {
   }
 };
 
-// Update suggestion status
 const updateSuggestionStatus = async (req, res) => {
   try {
     const validStatuses = ["PENDING", "REVIEWED", "IMPLEMENTED", "ARCHIVED"];
@@ -102,15 +107,24 @@ const updateSuggestionStatus = async (req, res) => {
       return res.status(400).json({ message: "Invalid status value" });
     }
 
-    const updatedSuggestion = await Suggestion.findOneAndUpdate(
-      { suggestionId: req.params.id },
+    // Search by both _id and suggestionId
+    const suggestion = await Suggestion.findOne({
+      $or: [
+        { _id: req.params.id },
+        { suggestionId: req.params.id }
+      ]
+    });
+
+    if (!suggestion) {
+      return res.status(404).json({ message: "Suggestion not found" });
+    }
+
+    // Update using the found document's ID
+    const updatedSuggestion = await Suggestion.findByIdAndUpdate(
+      suggestion._id,
       { status: req.body.status },
       { new: true, runValidators: true }
     ).select("-__v");
-
-    if (!updatedSuggestion) {
-      return res.status(404).json({ message: "Suggestion not found" });
-    }
 
     res.status(200).json({
       message: "Status updated successfully",

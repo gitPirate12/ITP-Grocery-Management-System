@@ -1,4 +1,5 @@
 const Product = require("../models/ProductModel");
+const mongoose = require("mongoose");
 
 const handleError = (res, error, statusCode = 500) => {
   console.error(error);

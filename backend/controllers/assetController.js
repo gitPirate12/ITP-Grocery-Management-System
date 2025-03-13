@@ -1,5 +1,21 @@
 const Asset = require("../models/AssetModel");
 
+
+
+// Get a single asset by ID
+const getAssetById = async (req, res) => {
+  try {
+    const asset = await Asset.findById(req.params.id);
+    if (!asset) {
+      return res.status(404).json({ message: "Asset not found" });
+    }
+    res.status(200).json({ data: asset });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // Add a new asset
 const addAsset = async (req, res) => {
   const {
@@ -160,6 +176,7 @@ const deleteAsset = async (req, res) => {
 };
 
 module.exports = {
+  getAssetById,
   addAsset,
   getAssets,
   updateAsset,

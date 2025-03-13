@@ -23,7 +23,7 @@ const SupplierSchema = new mongoose.Schema(
         type: String,
         required: true,
         match: [
-          /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/,
+          /^[+]?[0-9\s\-()/.]{6,}$/, 
           "Invalid phone number",
         ],
         trim: true,

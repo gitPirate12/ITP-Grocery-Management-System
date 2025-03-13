@@ -49,16 +49,6 @@ const customerSchema = new Schema(
       type: Date,
       default: Date.now,
     },
-    profileImage: {
-      type: String,
-      default: "https://via.placeholder.com/150",
-      validate: {
-        validator: function (v) {
-          return /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(v);
-        },
-        message: (props) => `${props.value} is not a valid URL!`,
-      },
-    },
     role: {
       type: String,
       enum: ["CUSTOMER", "ADMIN", "STAFF"],

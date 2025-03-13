@@ -140,20 +140,23 @@ const getCustomerProfile = async (req, res) => {
 // Update Profile
 const updateProfile = async (req, res) => {
   try {
-    const updates = {
-      name: req.body.name?.trim(),
-      phone: req.body.phone?.trim(),
-      address: {
-        street: req.body.address?.street?.trim(),
-        city: req.body.address?.city?.trim(),
-        state: req.body.address?.state?.trim(),
-        zipCode: req.body.address?.zipCode?.trim(),
-      },
-    };
+    // Build update object with dot notation
+    const updates = {};
+    
+    if (req.body.name) updates.name = req.body.name.trim();
+    if (req.body.phone) updates.phone = req.body.phone.trim();
+    
+    // Handle address updates with dot notation
+    if (req.body.address) {
+      if (req.body.address.street) updates['address.street'] = req.body.address.street.trim();
+      if (req.body.address.city) updates['address.city'] = req.body.address.city.trim();
+      if (req.body.address.state) updates['address.state'] = req.body.address.state.trim();
+      if (req.body.address.zipCode) updates['address.zipCode'] = req.body.address.zipCode.trim();
+    }
 
     const updatedCustomer = await CustomerModel.findByIdAndUpdate(
       req.params.id,
-      updates,
+      { $set: updates },  
       { new: true, runValidators: true }
     ).select("-password -__v");
 
@@ -170,29 +173,6 @@ const updateProfile = async (req, res) => {
   }
 };
 
-// Update Profile Picture
-const updateProfileImage = async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ message: "No file uploaded" });
-    }
-
-    const imageUrl = `/uploads/${req.file.filename}`;
-
-    const updatedCustomer = await CustomerModel.findByIdAndUpdate(
-      req.params.id,
-      { profileImage: imageUrl },
-      { new: true }
-    ).select("-password -__v");
-
-    res.status(200).json({
-      message: "Profile image updated",
-      data: updatedCustomer,
-    });
-  } catch (error) {
-    handleError(res, error);
-  }
-};
 
 module.exports = {
   registerCustomer,
@@ -200,6 +180,5 @@ module.exports = {
   deleteCustomer,
   authenticateCustomer,
   getCustomerProfile,
-  updateProfile,
-  updateProfileImage,
+  updateProfile
 };

@@ -42,7 +42,7 @@ const suggestionSchema = new Schema(
     suggestionId: {
       type: String,
       unique: true,
-      default: () => mongoose.Types.ObjectId().toString(),
+      default: () => new mongoose.Types.ObjectId().toString(), 
       index: true,
     },
     status: {

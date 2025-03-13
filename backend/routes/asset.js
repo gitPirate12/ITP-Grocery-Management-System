@@ -6,8 +6,10 @@ const {
   getAssets,
   updateAsset,
   deleteAsset,
+  getAssetById
 } = require("../controllers/assetController");
 
+router.get("/:id", getAssetById);
 router.post("/", addAsset);
 router.get("/", getAssets);
 router.put("/:id", updateAsset);

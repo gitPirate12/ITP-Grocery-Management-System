@@ -8,7 +8,6 @@ const handleError = (res, error, statusCode = 500) => {
   });
 };
 
-// Add a new liability
 const addLiability = async (req, res) => {
   const {
     itemCode,
@@ -39,42 +38,74 @@ const addLiability = async (req, res) => {
       });
     }
 
-    if (typeof initialAmount !== "number" || initialAmount < 0) {
+    // Convert string inputs to numbers where necessary
+    const parsedInitialAmount = Number(initialAmount);
+    const parsedInterestRate = Number(interestRate);
+    const parsedTermYears = Number(termYears);
+
+    if (isNaN(parsedInitialAmount) || parsedInitialAmount <= 0) {
       return res
         .status(400)
         .json({ message: "Initial amount must be a positive number" });
     }
 
     if (
-      typeof interestRate !== "number" ||
-      interestRate < 0 ||
-      interestRate > 100
+      isNaN(parsedInterestRate) ||
+      parsedInterestRate < 0 ||
+      parsedInterestRate > 100
     ) {
       return res
         .status(400)
         .json({ message: "Interest rate must be between 0-100" });
     }
 
-    if (typeof termYears !== "number" || termYears < 1 || termYears > 30) {
+    if (
+      isNaN(parsedTermYears) ||
+      parsedTermYears < 1 ||
+      parsedTermYears > 30
+    ) {
       return res
         .status(400)
         .json({ message: "Term years must be between 1-30" });
     }
 
+    // Create liability object
     const newLiability = new Liability({
       itemCode: itemCode.toUpperCase().trim(),
       name: name.trim(),
       liabilityType,
       startDate: new Date(startDate),
-      initialAmount,
-      interestRate,
-      termYears,
+      initialAmount: parsedInitialAmount,
+      interestRate: parsedInterestRate,
+      termYears: parsedTermYears,
     });
 
+    // Save to database
     const savedLiability = await newLiability.save();
+
     res.status(201).json({
       message: "Liability added successfully",
       data: savedLiability,
+    });
+  } catch (error) {
+    handleError(res, error);
+  }
+};
+
+
+
+// Get a single liability by ID
+const getLiabilityById = async (req, res) => {
+  try {
+    const liability = await Liability.findById(req.params.id);
+
+    if (!liability) {
+      return res.status(404).json({ message: "Liability not found" });
+    }
+
+    res.status(200).json({
+      message: "Liability fetched successfully",
+      data: liability,
     });
   } catch (error) {
     handleError(res, error);
@@ -143,6 +174,7 @@ const deleteLiability = async (req, res) => {
 };
 
 module.exports = {
+  getLiabilityById,
   addLiability,
   getLiabilities,
   updateLiability,

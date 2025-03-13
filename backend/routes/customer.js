@@ -21,7 +21,6 @@ router.get("/:id", getCustomerProfile);
 router.put("/:id", updateProfile);
 router.delete("/:id", deleteCustomer);
 
-// Profile Image Handling
-router.patch("/:id/avatar", updateProfileImage);
+
 
 module.exports = router;

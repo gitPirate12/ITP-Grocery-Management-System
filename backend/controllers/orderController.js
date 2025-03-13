@@ -88,29 +88,64 @@ const getOrders = async (req, res) => {
   }
 };
 
-// Update an existing order
 const updateOrder = async (req, res) => {
   try {
-    const updates = {
-      ...req.body,
-      ...(req.body.orderNumber && {
-        orderNumber: req.body.orderNumber.toUpperCase().trim(),
-      }),
-      ...(req.body.deliveryDate && {
-        deliveryDate: new Date(req.body.deliveryDate),
-      }),
-      ...(req.body.pricing && {
-        pricing: {
-          unitPrice: Number(req.body.pricing.unitPrice),
-          discount: Number(req.body.pricing.discount),
-        },
-      }),
-    };
+    const updates = {};
+    
+    // Handle top-level fields
+    if (req.body.orderNumber) {
+      updates.orderNumber = req.body.orderNumber.toUpperCase().trim();
+    }
+    if (req.body.status) {
+      updates.status = req.body.status;
+    }
+    if (req.body.paymentMethod) {
+      updates.paymentMethod = req.body.paymentMethod;
+    }
+    if (req.body.deliveryDate) {
+      updates.deliveryDate = new Date(req.body.deliveryDate);
+    }
 
-    const updatedOrder = await Order.findByIdAndUpdate(req.params.id, updates, {
-      new: true,
-      runValidators: true,
-    }).populate("supplierId", "name");
+    // Handle pricing updates
+    if (req.body.pricing) {
+      if (typeof req.body.pricing.unitPrice !== 'undefined') {
+        updates['pricing.unitPrice'] = Number(req.body.pricing.unitPrice);
+      }
+      if (typeof req.body.pricing.discount !== 'undefined') {
+        updates['pricing.discount'] = Number(req.body.pricing.discount);
+      }
+    }
+
+    // Handle items updates
+    if (req.body.items) {
+      updates.items = req.body.items.map(item => ({
+        itemCode: item.itemCode?.trim(),
+        name: item.name?.trim(),
+        quantity: Number(item.quantity)
+      }));
+    }
+
+    // Handle shipping address updates
+    if (req.body.shippingAddress) {
+      const addressFields = ['street', 'city', 'state', 'postalCode', 'country'];
+      addressFields.forEach(field => {
+        if (req.body.shippingAddress[field]) {
+          updates[`shippingAddress.${field}`] = req.body.shippingAddress[field].trim();
+        }
+      });
+    }
+
+    const updatedOrder = await Order.findByIdAndUpdate(
+      req.params.id,
+      { $set: updates },
+      { 
+        new: true,
+        runValidators: true,
+        context: 'query'
+      }
+    )
+    .populate("supplierId", "name contact.phone")
+    .select("-__v");
 
     if (!updatedOrder) {
       return res.status(404).json({ message: "Order not found" });

@@ -49,7 +49,7 @@ const inquirySchema = new Schema(
     inquiryId: {
       type: String,
       unique: true,
-      default: () => mongoose.Types.ObjectId().toString(),
+      default: () => new mongoose.Types.ObjectId().toString(), 
       index: true,
     },
   },

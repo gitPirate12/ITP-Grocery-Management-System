@@ -86,21 +86,19 @@ const getPromotions = async (req, res) => {
   }
 };
 
-// Update an existing promotion
 const updatePromotion = async (req, res) => {
   try {
+    const promotionCode = req.params.promotionCode.toUpperCase();
+    
     const updates = {
       ...req.body,
-      ...(req.body.promotionCode && {
-        promotionCode: req.body.promotionCode.toUpperCase().trim(),
-      }),
       ...(req.body.startDate && { startDate: new Date(req.body.startDate) }),
       ...(req.body.endDate && { endDate: new Date(req.body.endDate) }),
     };
 
     const updatedPromotion = await Promotion.findOneAndUpdate(
-      { promotionCode: req.body.promotionCode },
-      updates,
+      { promotionCode }, // Use URL parameter instead of body
+      { $set: updates },
       { new: true, runValidators: true }
     ).select("-__v");
 
