@@ -1,0 +1,117 @@
+.product-management {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.add-product-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-product-btn:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.product-table th {
+  background: #f8f9fa;
+  color: #2d3436;
+  font-weight: 600;
+  text-align: left;
+  padding: 1rem 1.5rem;
+  border-bottom: 2px solid #eee;
+}
+
+.product-table td {
+  padding: 1rem 1.5rem;
+  color: #2d3436;
+  border-bottom: 1px solid #eee;
+}
+
+.product-table tr:hover {
+  background: #f8fafc;
+}
+
+.product-name {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.product-category {
+  padding: 4px 8px;
+  border-radius: 4px;
+
+  display: inline-block;
+}
+
+.product-category {
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-transform: capitalize;
+}
+
+.product-category[data-category="dairy"] {
+  background: #bfdbfe;
+}
+.product-category[data-category="produce"] {
+  background: #bbf7d0;
+}
+.product-category[data-category="bakery"] {
+  background: #fde68a;
+}
+.product-category[data-category="meat"] {
+  background: #fecaca;
+}
+.product-category[data-category="frozen"] {
+  background: #bfdbfe;
+}
+.product-category[data-category="pantry"] {
+  background: #ddd6fe;
+}
+.product-category[data-category="beverages"] {
+  background: #a5f3fc;
+}
+.product-category[data-category="household"] {
+  background: #cbd5e1;
+}
+
+.storage-condition {
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.storage-condition[data-storage="room temperature"] {
+  color: #3b82f6;
+}
+.storage-condition[data-storage="refrigerated"] {
+  color: #10b981;
+}
+.storage-condition[data-storage="frozen"] {
+  color: #6366f1;
+}

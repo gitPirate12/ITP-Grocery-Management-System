@@ -1,0 +1,71 @@
+.income-management {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.income-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.add-income-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #10b981;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-income-btn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+.income-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.income-table th {
+  background: #f8f9fa;
+  color: #2d3436;
+  font-weight: 600;
+  text-align: left;
+  padding: 1rem 1.5rem;
+  border-bottom: 2px solid #eee;
+}
+
+.income-table td {
+  padding: 1rem 1.5rem;
+  color: #2d3436;
+  border-bottom: 1px solid #eee;
+}
+
+.income-table tr:hover {
+  background: #f8fafc;
+}
+
+.income-title {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.income-category {
+  padding: 4px 8px;
+  border-radius: 4px;
+
+  display: inline-block;
+}

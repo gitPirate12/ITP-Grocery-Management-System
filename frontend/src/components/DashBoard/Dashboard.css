@@ -1,0 +1,178 @@
+.dashboard-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem 0;
+}
+
+.dashboard-header h1 {
+  font-size: 2rem;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+}
+
+.update-time {
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 0 auto;
+}
+
+.summary-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+}
+
+.summary-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.summary-card.inventory::after {
+  background: #4299e1;
+}
+.summary-card.netWorth::after {
+  background: #38a169;
+}
+.summary-card.income::after {
+  background: #48bb78;
+}
+.summary-card.expense::after {
+  background: #f56565;
+}
+.summary-card.asset::after {
+  background: #9f7aea;
+}
+.summary-card.liability::after {
+  background: #ed8936;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card-icon {
+  font-size: 1.5rem;
+  color: #4a5568;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #2d3748;
+}
+
+.card-value {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+.value-subtext {
+  display: block;
+  font-size: 0.85rem;
+  color: #718096;
+  margin-top: 0.5rem;
+}
+
+.trend-indicator {
+  margin-left: auto;
+  font-size: 1.2rem;
+}
+
+.trend-indicator.positive {
+  color: #38a169;
+}
+.trend-indicator.negative {
+  color: #e53e3e;
+}
+
+.loading-state,
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #4299e1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.error-content {
+  background: #fff5f5;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 500px;
+}
+
+.error-icon {
+  color: #e53e3e;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.retry-btn {
+  background: #4299e1;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s ease;
+}
+
+.retry-btn:hover {
+  background: #3182ce;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}

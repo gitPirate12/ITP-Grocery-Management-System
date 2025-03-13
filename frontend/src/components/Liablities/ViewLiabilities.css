@@ -1,0 +1,59 @@
+.liability-management {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+.liability-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.add-liability-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #0984e3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-liability-btn:hover {
+  background: #0873c4;
+  transform: translateY(-1px);
+}
+
+.liability-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.liability-table th {
+  background: #f8f9fa;
+  color: #2d3436;
+  font-weight: 600;
+  text-align: left;
+  padding: 1rem 1.5rem;
+  border-bottom: 2px solid #eee;
+}
+
+.liability-table td {
+  padding: 1rem 1.5rem;
+  color: #2d3436;
+  border-bottom: 1px solid #eee;
+}
+
+.liability-table tr:hover {
+  background: #f8fafc;
+}
