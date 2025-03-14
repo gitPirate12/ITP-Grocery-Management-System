@@ -1,5 +1,5 @@
 # ITP-Grocery-Management-System
-ITP-Grocery-Management-System is a web app developed for the ITP assignment. It’s a documentation app that that stores all detaisla bout the grosersies assets incoems esxpenses and liablites and products. The application is built using the MERN stack (MongoDB, Express, React, and Node.js) .
+ITP-Grocery-Management-System is a web app developed for the ITP assignment. It’s a CRUD (Create, Read, Update, Delete) application that allows users to manage  assets, incomes, expenses, liabilities, and products. The application is built using the MERN stack (MongoDB, Express, React, and Node.js).
 
 ## Running the Project
 
@@ -57,13 +57,14 @@ By default, the server runs on port 5000 and the client runs on port 3000. Ensur
 
 ## ScreenShots
 
-![Screenshot of the App](./ScreenShots/Screenshot%201.png)
-![Screenshot 2](./ScreenShots/Screenshot%202.png)
-![Screenshot 3](./ScreenShots/Screenshot%203.png)
+![Screenshot of the App](./ScreenShots/Screenshot-1.png)
+![Screenshot 2](./ScreenShots/Screenshot-2.png)
+![Screenshot 3](./ScreenShots/Screenshot-3.png)
+![Screenshot 3](./ScreenShots/Screenshot-4.png)
 
 ## Postman API Documentation
 
 For complete details on our API endpoints, request/response formats, and usage examples, please refer to the Postman documentation:
 
-[ITPM-LINGO API Documentation](https://documenter.getpostman.com/view/26831435/2sAYkAQhZH)
+[ITP-Grocery-Management-System API Documentation](https://documenter.getpostman.com/view/26831435/2sAYkAQhZH)
 
